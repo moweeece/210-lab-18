@@ -38,12 +38,12 @@ int main() {
     int userChoice;
     char anotherReview;
 
+    // getting user inputs
     cout << "Which linked list method should we use" << endl;
     cout << "\t [1] New nodes are added at the head of the linked list" << endl;
     cout << "\t [2] New nodes are added at the tail of the linked list" << endl;
     cout << "Choice: ";
     cin >> userChoice;
-    cout << endl;
 
     // do while loop for inputting while user says Y or y
     do {
@@ -56,6 +56,7 @@ int main() {
         cout << "Enter review comment: ";
         getline (cin, comment);
 
+        // add node to head or tail depending on user input
         if (userChoice == 1)
         {
             reviewsList.addNodeToHead(rating, comment);
@@ -108,20 +109,22 @@ void LinkedList::addNodeToTail(float userRating, const string& userComment)
     newNode->rating = userRating;
     newNode->comment = userComment;
 
-    
+    // if the list is empty
     if (!head)
     {
         head = newNode;
     }
-    
-    Node *current = head;
-    // while the next pointer is not pointing at nullpointer
-    // move pointer to next node
-    while (current->next != nullptr)
+    else
     {
-        current = current->next;
+        Node *current = head;
+        // while the next pointer is not pointing at nullpointer
+        // move pointer to next node
+        while (current->next != nullptr)
+        {
+            current = current->next;
+        }
+        current->next = newNode;
     }
-    current->next = newNode;
 
 }
 
@@ -138,14 +141,15 @@ void LinkedList::display()
     // while not at the end of the list, display reviews
     while (temp != nullptr)
     {
-        cout << "> Review #" << count + 1 << ": " << temp->rating << ": " << temp->comment << endl;
+        cout << setw(13) << "> Review #" << count + 1 << ": " << temp->rating << ": " << temp->comment << endl;
         sum += temp->rating;
         count++;
         temp = temp->next;
     }
 
+    // calculate and display average
     average = sum / count;
-    cout << setprecision(5) << "> Average: " << average << endl;
+    cout << setprecision(6) << setw(14) << "> Average: " << average << endl;
 }
 
 
