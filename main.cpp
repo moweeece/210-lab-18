@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <iomanip>
 using namespace std;
 
 struct Node
@@ -38,8 +39,8 @@ int main() {
     char anotherReview;
 
     cout << "Which linked list method should we use" << endl;
-    cout << "/t [1] New nodes are added at the head of the linked list" << endl;
-    cout << "/t [2] New nodes are added at the tail of the linked list" << endl;
+    cout << "\t [1] New nodes are added at the head of the linked list" << endl;
+    cout << "\t [2] New nodes are added at the tail of the linked list" << endl;
     cout << "Choice: ";
     cin >> userChoice;
     cout << endl;
@@ -84,7 +85,7 @@ LinkedList::LinkedList() : head(nullptr) {}
 void LinkedList::addNodeToHead(float userRating, const string& userComment)
 {
     // create a new memory allocation for the new node
-    Node* newNode = new Node;
+    Node *newNode = new Node;
     newNode->next = nullptr;
 
     // set newNodes values
@@ -97,8 +98,66 @@ void LinkedList::addNodeToHead(float userRating, const string& userComment)
 }
 
 // function to add node to the tail of the linked list
-//void addNodeToTail();
+void LinkedList::addNodeToTail(float userRating, const string& userComment)
+{
+    // create a new memory allocation for the new node
+    Node *newNode = new Node;
+    newNode->next = nullptr;
+
+    // set newNodes values
+    newNode->rating = userRating;
+    newNode->comment = userComment;
+
+    
+    if (!head)
+    {
+        head = newNode;
+    }
+    
+    Node *current = head;
+    // while the next pointer is not pointing at nullpointer
+    // move pointer to next node
+    while (current->next != nullptr)
+    {
+        current = current->next;
+    }
+    current->next = newNode;
+
+}
 
 
 // function to display the reviews and an average
-//void display();
+void LinkedList::display()
+{
+
+    Node *temp = head;
+    int count = 0;
+    float sum = 0.0;
+    float average = 0.0;
+
+    // while not at the end of the list, display reviews
+    while (temp != nullptr)
+    {
+        cout << "> Review #" << count + 1 << ": " << temp->rating << ": " << temp->comment << endl;
+        sum += temp->rating;
+        count++;
+        temp = temp->next;
+    }
+
+    average = sum / count;
+    cout << setprecision(5) << "> Average: " << average << endl;
+}
+
+
+// linked list destructor
+LinkedList::~LinkedList()
+{
+    // while not at the end of the list
+    while (head != nullptr)
+    {
+        Node *temp = head;
+        head = head->next;    // move to next node
+        delete temp;          // delete it
+    }
+
+}
