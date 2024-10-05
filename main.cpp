@@ -22,8 +22,8 @@ class LinkedList
     LinkedList();
 
     // function delcarations
-    void addNodeToHead();
-    void addNodeToTail();
+    void addNodeToHead(float, const string&);
+    void addNodeToTail(float, const string&);
     void display();
 
     // destructor
@@ -57,11 +57,11 @@ int main() {
 
         if (userChoice == 1)
         {
-            reviewsList.addNodeToHead();
+            reviewsList.addNodeToHead(rating, comment);
         }
         else if (userChoice == 2)
         {
-            reviewsList.addNodeToTail();
+            reviewsList.addNodeToTail(rating, comment);
         }
 
         cout << "Enter another review? Y/N: ";
@@ -76,10 +76,29 @@ int main() {
 
 
 // function definitions
-//void addNodeToHead();
 
+// constructor
+LinkedList::LinkedList() : head(nullptr) {}
 
+// function to add node to the front of the linked list
+void LinkedList::addNodeToHead(float userRating, const string& userComment)
+{
+    // create a new memory allocation for the new node
+    Node* newNode = new Node;
+    newNode->next = nullptr;
+
+    // set newNodes values
+    newNode->rating = userRating;
+    newNode->comment = userComment;
+
+    // have head now point to the new node
+    newNode->next = head;
+    head = newNode;
+}
+
+// function to add node to the tail of the linked list
 //void addNodeToTail();
 
 
+// function to display the reviews and an average
 //void display();
